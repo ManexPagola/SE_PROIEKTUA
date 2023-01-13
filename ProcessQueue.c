@@ -3,11 +3,20 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <semaphore.h>
+#include <pthread.h>
 
 #define PRO_MAX 100
 
+typedef struct MemoryManagement {
+   unsigned int pgb;
+   unsigned int code;
+   unsigned int data;
+} MemoryManagement;
+
 typedef struct Pcb {
     pthread_t pid;
+    int denbora;
+    struct MemoryManagement mm; 
 } Pcb;
 
 struct Pcb ProcessQueue[PRO_MAX];

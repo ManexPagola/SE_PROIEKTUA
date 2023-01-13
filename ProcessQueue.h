@@ -6,6 +6,7 @@
 
 typedef struct Pcb {
     pthread_t pid;
+    int denbora;
 } Pcb;
 
 

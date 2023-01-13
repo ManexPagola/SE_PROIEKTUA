@@ -6,11 +6,13 @@
 #include <semaphore.h>
 
 #include "Process_Generator.h"
+#include "Scheduler.h"
 
 pthread_mutex_t mutexTick;
+pthread_mutex_t mutexSch;
 pthread_cond_t condTick;
 pthread_cond_t condTick2;
-sem_t sem1;
+sem_t sem1, sem2;
 int tick=0;
 int tick2=0;
 int count=0;
@@ -52,6 +54,7 @@ void* Tenporizadorea_pro(int f) {
 
 void* Tenporizadorea_sch(int f) { 
 	pthread_mutex_lock(&mutexTick);
+	sem_init(&sem2, 0, 1);
 	//printf("Balioa: %d\n", f);
 	//printf("Tenporizadorea iritsi da\n");
 	while (1) {
@@ -59,12 +62,16 @@ void* Tenporizadorea_sch(int f) {
 		tick2++;
 		//printf("Kontagailua: %d\n", tick);
 		if (tick2 == f) {
-			printf("Schedulerraren tenporizadoreak seinalea bidali du tick honetan: %d\n",tick2);
+			//printf("Schedulerraren tenporizadoreak seinalea bidali du tick honetan: %d\n",tick2);
+			sem_wait(&sem2);
+			Scheduler();
 			tick2 = 0;
+			sem_post(&sem2);
 		}
 		pthread_cond_signal(&condTick);
 		pthread_cond_wait(&condTick2, &mutexTick);
 	}
+	sem_destroy(&sem2);
 }
 
 //int main(int argc, char* argv[]) { 

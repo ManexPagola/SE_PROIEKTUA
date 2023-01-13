@@ -4,40 +4,52 @@
 #include <errno.h>
 #include <pthread.h>
 #include <string.h>
-#include <sys/wait.h>
+//#include <sys/wait.h>
 #include <semaphore.h>
 
 #include "ProcessQueue.h"
 
-//int tick=0;
-//int i=0;
+
 struct Pcb prozesua;
 pthread_t proGen;
+int pro_denb;
+
+//int tick=0;
+//int i=0;
 //pthread_mutex_t mutexProzesu;
 //pthread_mutex_t mutexProzesu2;
 
-void* ProzesuHuts() { 
-	sleep(0);
+void* ProzesuHuts(int n) { 
+  
+
+	for (int i=0; i < 5; i++)  {
+    sleep(1);
+    i++;
+  }
+
 }
 
-void* ProErakutsi(int ind) {
-    printf("%lu\t", ProcessQueue[ind].pid);
-}
+//void* ProErakutsi(int ind) {
+  //  printf("%lu\t", ProcessQueue[ind].pid);
+//}
 
 void* ProzesuSortzaile() {
-  int j=0;
-  
-    if (pthread_create(&proGen, NULL, &ProzesuHuts, NULL) != 0) { 
+  //int j=0;
+  pro_denb = (rand() % 10) + 1;
+    if (pthread_create(&proGen, NULL, &ProzesuHuts, pro_denb) != 0) { 
 		      fprintf(stderr, "Errorea prozesu sortzailearen haria sortzen \n");
           exit(EXIT_FAILURE);
     }
     prozesua.pid = proGen;
+    prozesua.denbora = pro_denb;
     gehituPro(prozesua);
-    if (j < 100)
-    {
-      ProErakutsi(j);
-    }
-    j++;
+    
+   // if (j < 100)
+    //{
+     // ProErakutsi(j);
+      //printf("%d\n", tamaina());
+    //}
+    //j++;
   
 
 }

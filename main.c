@@ -12,6 +12,7 @@
 #include "ProcessQueue.h"
 #include "Erlojua.h"
 #include "CPU.h"
+#include "Scheduler.h"
 
 int CPU_kop, core_kop, hari_kop, maiz_Pro, maiz_Sch;
 
@@ -96,31 +97,34 @@ int main(int argc, char *argv[])
 
 
 
-    int i, j, k;
+    CPU_Hasieratu(CPU_kop, core_kop, hari_kop);
 
-	for (i=0; i < CPU_kop; i++) {
 
-		for (j=0; j < core_kop; j++) {
-
-			for (k=0; k < hari_kop; k++) {
-			
-				Th_array[i][j][k] = hari;
-				hari++; 
-			}
-		}
-	}	
-
-	int a,b,c;
-	for (a=0; a < CPU_kop; a++) {
-
-                for (b=0; b < core_kop; b++) {
-
-                        for (c=0; c < hari_kop; c++) {
-
-                                printf("%d %d %d = %lu\n", a,b,c,Th_array[a][b][c]); 
-                        }
-                }
-        }   
+    //int i, j, k;
+//
+	//for (i=0; i < CPU_kop; i++) {
+//
+	//	for (j=0; j < core_kop; j++) {
+//
+	//		for (k=0; k < hari_kop; k++) {
+	//		
+	//			Th_array[i][j][k] = hari;
+	//			hari++; 
+	//		}
+	//	}
+	//}	
+//
+	//int a,b,c;
+	//for (a=0; a < CPU_kop; a++) {
+//
+    //            for (b=0; b < core_kop; b++) {
+//
+    //                    for (c=0; c < hari_kop; c++) {
+//
+    //                            printf("%d %d %d = %lu\n", a,b,c,Th_array[a][b][c]); 
+    //                    }
+    //            }
+    //}   
 
 
     pthread_t erl, tenpProz, tenpSch;

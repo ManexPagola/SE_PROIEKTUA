@@ -7,13 +7,12 @@
 #include <errno.h>
 #include <pthread.h>
 #include <string.h>
-#include <sys/wait.h>
+//#include <sys/wait.h>
 #include <semaphore.h>
 
 #include "ProcessQueue.h"
 
-struct Pcb prozesua;
-pthread_t proGen;
+
 
 void* ProzesuHuts();
 

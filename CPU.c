@@ -7,9 +7,111 @@
 #define TH_MAX 10
 #define CORE_MAX 10
 #define CPU_MAX 10
+#define TLB_MAX 256
 
-pthread_t hari = 0;
-pthread_t Th_array[CPU_MAX][CORE_MAX][TH_MAX];
+
+
+Hw_hari Th_array[CPU_MAX][CORE_MAX][TH_MAX];
+
+
+
+typedef struct  TLB_sarrera
+{
+	int index;
+	int full;
+	unsigned char v_page;
+	unsigned char f_page;
+}TLB_sarrera;
+
+
+typedef struct  TLB
+{
+	struct TLB_sarrera tlb_array[TLB_MAX];
+}TLB;
+
+
+typedef struct MMU {
+    struct TLB tlb;
+} MMU;
+
+
+typedef struct Hw_hari {
+    int tid;
+	unsigned int ptbr;
+	unsigned int pc;
+	unsigned int ir;
+    struct MMU mmu;
+} Hw_hari;
+
+struct TLB tlb_hasieratu(TLB *tlbpar) {
+	int tlb_i;
+	TLB_sarrera tlb_array[TLB_MAX];
+	for (tlb_i = 0; tlb_i < TLB_MAX; tlb_i++)
+	{
+		tlb_array[tlb_i].index = tlb_i;
+		tlb_array[tlb_i].full = 0;
+	}
+	tlbpar->tlb_array;
+}
+
+
+struct MMU mmu_hasieratu(MMU *mmupar) {
+	TLB tlbald;
+	TLB *tlb_pt = &tlbald;
+	tlbald = tlb_hasieratu(tlb_pt);
+	mmupar->tlb = tlbald;
+	return *mmupar; 
+
+}
+
+void Hw_hari_hasieratu(Hw_hari hari, int id) {
+	hari.tid = id;
+	MMU mmup;
+	MMU *mmu_pt = &mmup;
+	mmup = mmu_hasieratu(mmu_pt);
+	hari.mmu = mmup;
+}
+
+
+int HiruDtik1Dra(int x, int y, int z) {
+	return (z * CPU_MAX * CORE_MAX) + (y * CPU_MAX) + x;
+}
+
+
+
+
+void CPU_hasieratu(int CPU_kop, int core_kop, int hari_kop)
+{
+int i, j, k;
+
+	for (i=0; i < CPU_kop; i++) {
+
+		for (j=0; j < core_kop; j++) {
+
+			for (k=0; k < hari_kop; k++) {
+			
+				Hw_hari hari;
+				int idth = HiruDtik1Dra(i, j, k);
+				Hw_hari_hasieratu(hari, idth);
+				Th_array[i][j][k] = hari; 
+			}
+		}
+	}	
+
+	int a,b,c;
+	for (a=0; a < CPU_kop; a++) {
+
+                for (b=0; b < core_kop; b++) {
+
+                        for (c=0; c < hari_kop; c++) {
+
+                                printf("%d %d %d = %lu\n", a,b,c,Th_array[a][b][c]); 
+                        }
+                }
+    } 
+}  
+
+
 
 //int main(int argc, char *argv[]) {
 //
